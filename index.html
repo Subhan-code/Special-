@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Between Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #1d1d1f;
+            margin-bottom: 30px;
+        }
+        textarea, input[type="text"], input[type="number"] {
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #000000;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #000000;
+            color: white;
+        }
+        .output {
+            background-color: #f5f5f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab {
+            color:#1d1d1f;
+            font-weight: bold;
+            padding: 10px 15px;
+            cursor: pointer;
+            background: #f5f5f7;
+            border: none;
+            border-radius: 8px;
+            margin: 0 5px;
+        }
+        .tab.active {
+            background-color: #000000;
+            color: white;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .toggle-switch input {
+            margin-right: 10px;
+        }
+        #downloadButton {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .bst{
+            font-weight: bolder;
+            padding: 20px;
+        }
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .tab-container {
+                display: none;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .dropbtn {
+                background-color: #000000;
+                color: white;
+                padding: 12px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                text-align: left;
+                border-radius: 8px;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                width: 100%;
+                border-radius: 8px;
+            }
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+            .show {
+                display: block;
+            }
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .container {
+                padding: 40px;
+            }
+            .tab-container {
+                flex-wrap: nowrap;
+            }
+            .tab {
+                font-size: 16px;
+            }
+            .dropdown {
+                display: none;
+            }
+        }
+
+        /* The switch - the box around the slider */
+        .switch {
+          font-size: 17px;
+          position: relative;
+          display: inline-block;
+          width: 3.5em;
+          height: 2em;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        /* The slider */
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgb(182, 182, 182);
+          transition: .4s;
+          border-radius: 10px;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 1.4em;
+          width: 1.4em;
+          border-radius: 8px;
+          left: 0.3em;
+          bottom: 0.3em;
+          transform: rotate(270deg);
+          background-color: rgb(255, 255, 255);
+          transition: .4s;
+        }
+
+        .switch input:checked + .slider {
+          background-color: #21cc4c;
+        }
+
+        .switch input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+
+        .switch input:checked + .slider:before {
+          transform: translateX(1.5em);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖤 Secrets Between Us 🖤</h1>
+        <div class="tab-container">
+            <button class="tab active" data-target="morse">Morse Code</button>
+            <button class="tab" data-target="caesar">Caesar Cipher</button>
+            <button class="tab" data-target="vigenere">Vigenère Cipher</button>
+            <button class="tab" data-target="binary">Binary</button>
+            <button class="tab" data-target="base64">Base64</button>
+            <button class="tab" data-target="stego">Text in Image</button>
+        </div>
+        
+        <div class="dropdown">
+            <button onclick="toggleDropdown()" class="dropbtn">Select Cipher ▼</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#" data-target="morse">Morse Code</a>
+                <a href="#" data-target="caesar">Caesar Cipher</a>
+                <a href="#" data-target="vigenere">Vigenère Cipher</a>
+                <a href="#" data-target="binary">Binary</a>
+                <a href="#" data-target="base64">Base64</a>
+                <a href="#" data-target="stego">Text in Image</a>
+            </div>
+        </div>
+        
+        <div id="morseSection" class="section active">
+            <textarea id="morseInput" rows="5" placeholder="Enter text or Morse code here..."></textarea>
+            <button onclick="translateMorse()">Convert Morse</button>
+            <div id="morseOutput" class="output"></div>
+        </div>
+        
+        <div id="caesarSection" class="section">
+            <div class="toggle-switch">
+                <label class="switch">
+                    <input type="checkbox" id="caesarToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="bst">Decrypt</span>
+            </div>
+            <input type="number" id="caesarShift" placeholder="Shift" min="0" max="25" value="3">
+            <textarea id="caesarInput" rows="5" placeholder="Enter text here..."></textarea>
+            <button onclick="processCaesar()">Process Caesar</button>
+            <div id="caesarOutput" class="output"></div>
+        </div>
+
+        <div id="vigenereSection" class="section">
+            <div class="toggle-switch">
+                <label class="switch">
+                    <input type="checkbox" id="vigenereToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="bst">Decrypt</span>
+            </div>
+            <input type="text" id="vigenereKey" placeholder="Enter key...">
+            <textarea id="vigenereInput" rows="5" placeholder="Enter text..."></textarea>
+            <button onclick="processVigenere()">Process Vigenère</button>
+            <div id="vigenereOutput" class="output"></div>
+        </div>
+
+        <div id="binarySection" class="section">
+            <div class="toggle-switch">
+                <label class="switch">
+                    <input type="checkbox" id="binaryToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="bst">Binary to Text</span>
+            </div>
+            <textarea id="binaryInput" rows="5" placeholder="Enter text or binary..."></textarea>
+            <button onclick="processBinary()">Convert Binary</button>
+            <div id="binaryOutput" class="output"></div>
+        </div>
+
+        <div id="base64Section" class="section">
+            <div class="toggle-switch">
+                <label class="switch">
+                    <input type="checkbox" id="base64Toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="bst">Decode</span>
+            </div>
+            <textarea id="base64Input" rows="5" placeholder="Enter text..."></textarea>
+            <button onclick="processBase64()">Process Base64</button>
+            <div id="base64Output" class="output"></div>
+        </div>
+
+        <div id="stegoSection" class="section">
+            <input type="file" id="imageInput" accept="image/*">
+            <textarea id="stegoText" rows="3" placeholder="Enter secret text..."></textarea>
+            <button onclick="hideTextInImage()">Hide Text in Image</button>
+            <button onclick="extractTextFromImage()">Extract Text from Image</button>
+            <div id="stegoOutput" class="output"></div>
+            <img id="stegoImage" src="" alt="Stego Image" style="display: none; max-width: 100%; margin-top: 20px;">
+            <button id="downloadButton" onclick="downloadImage()" style="display: none;">Download Modified Image</button>
+        </div>
+    </div>
+
+    <script>
+        const morseCode = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+            'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+            'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+            'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+            'Y': '-.--', 'Z': '--..', '0': '-----', '1': '.----', '2': '..---',
+            '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...',
+            '8': '---..', '9': '----.', '.': '.-.-.-', ',': '--..--', '?': '..--..',
+            "'": '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-',
+            '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.',
+            '-': '-....-', '_': '..--.-', '"': '.-..-.', '$': '...-..-', '@': '.--.-.',
+            ' ': '/'
+        };
+
+        function translateMorse() {
+            const input = document.getElementById('morseInput').value.trim().toUpperCase();
+            const output = document.getElementById('morseOutput');
+            
+            if (input.includes('.') || input.includes('-')) {
+                // Morse to Text
+                const words = input.split('/');
+                const translated = words.map(word => {
+                    return word.trim().split(' ').map(char => {
+                        return Object.keys(morseCode).find(key => morseCode[key] === char) || char;
+                    }).join('');
+                }).join(' ');
+                output.textContent = translated;
+            } else {
+                // Text to Morse
+                const translated = input.split('').map(char => {
+                    return morseCode[char] || char;
+                }).join(' ');
+                output.textContent = translated;
+            }
+        }
+
+        function caesarCipher(text, shift, decrypt = false) {
+            return text.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const code = char.charCodeAt(0);
+                    let shiftAmount = (decrypt ? -shift : shift) % 26;
+                    let shiftedCode = code + shiftAmount;
+                    if (shiftedCode > (char === char.toUpperCase() ? 90 : 122)) {
+                        shiftedCode -= 26;
+                    } else if (shiftedCode < (char === char.toUpperCase() ? 65 : 97)) {
+                        shiftedCode += 26;
+                    }
+                    return String.fromCharCode(shiftedCode);
+                }
+                return char;
+            }).join('');
+        }
+
+        function processCaesar() {
+            const input = document.getElementById('caesarInput').value;
+            const shift = parseInt(document.getElementById('caesarShift').value);
+            const isDecrypt = document.getElementById('caesarToggle').checked;
+            const output = document.getElementById('caesarOutput');
+            
+            const result = caesarCipher(input, shift, isDecrypt);
+            output.textContent = `Shift: ${shift} - ${result}`;
+        }
+
+        function vigenere(text, key, decrypt = false) {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let result = '';
+            let keyIndex = 0;
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i].toUpperCase();
+                if (alphabet.includes(char)) {
+                    const charIndex = alphabet.indexOf(char);
+                    const keyChar = key[keyIndex % key.length].toUpperCase();
+                    const keyCharIndex = alphabet.indexOf(keyChar);
+                    let newIndex;
+
+                    if (decrypt) {
+                        newIndex = (charIndex - keyCharIndex + 26) % 26;
+                    } else {
+                        newIndex = (charIndex + keyCharIndex) % 26;
+                    }
+
+                    result += text[i] === text[i].toUpperCase() ? alphabet[newIndex] : alphabet[newIndex].toLowerCase();
+                    keyIndex++;
+                } else {
+                    result += text[i];
+                }
+            }
+
+            return result;
+        }
+
+        function processVigenere() {
+            const input = document.getElementById('vigenereInput').value;
+            const key = document.getElementById('vigenereKey').value;
+            const isDecrypt = document.getElementById('vigenereToggle').checked;
+            const output = document.getElementById('vigenereOutput');
+            
+            if (!key) {
+                output.textContent = "Please enter a key.";
+                return;
+            }
+
+            const result = vigenere(input, key, isDecrypt);
+            output.textContent = `Key: ${key} - ${result}`;
+        }
+
+        function processBinary() {
+            const input = document.getElementById('binaryInput').value;
+            const output = document.getElementById('binaryOutput');
+            const isBinaryToText = document.getElementById('binaryToggle').checked;
+            
+            if (isBinaryToText) {
+                // Binary to Text
+                output.textContent = input.split(' ').map(bin => String.fromCharCode(parseInt(bin, 2))).join('');
+            } else {
+                // Text to Binary
+                output.textContent = input.split('').map(char => char.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+            }
+        }
+
+        function processBase64() {
+            const input = document.getElementById('base64Input').value;
+            const output = document.getElementById('base64Output');
+            const isDecode = document.getElementById('base64Toggle').checked;
+            
+            if (isDecode) {
+                try {
+                    output.textContent = atob(input);
+                } catch (e) {
+                    output.textContent = "Invalid Base64 input";
+                }
+            } else {
+                output.textContent = btoa(input);
+            }
+        }
+
+        function hideTextInImage() {
+            const file = document.getElementById('imageInput').files[0];
+            const text = document.getElementById('stegoText').value;
+            
+            if (!file || !text) {
+                alert('Please select an image and enter text.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const encodedText = btoa(text);
+                    
+                    // Store the length of the encoded text in the first 4 pixels
+                    const textLength = encodedText.length;
+                    for (let i = 0; i < 4; i++) {
+                        imageData.data[i * 4] = (textLength >> (i * 8)) & 255;
+                    }
+                    
+                    for (let i = 0; i < encodedText.length; i++) {
+                        const code = encodedText.charCodeAt(i);
+                        imageData.data[(i + 4) * 4] = (imageData.data[(i + 4) * 4] & 0xFC) | ((code >> 6) & 0x3);
+                        imageData.data[(i + 4) * 4 + 1] = (imageData.data[(i + 4) * 4 + 1] & 0xFC) | ((code >> 4) & 0x3);
+                        imageData.data[(i + 4) * 4 + 2] = (imageData.data[(i + 4) * 4 + 2] & 0xFC) | ((code >> 2) & 0x3);
+                        imageData.data[(i + 4) * 4 + 3] = (imageData.data[(i + 4) * 4 + 3] & 0xFC) | (code & 0x3);
+                    }
+
+                    ctx.putImageData(imageData, 0, 0);
+                    document.getElementById('stegoImage').src = canvas.toDataURL();
+                    document.getElementById('stegoImage').style.display = 'block';
+                    document.getElementById('stegoOutput').textContent = 'Text hidden in image. You can now download the modified image.';
+                    document.getElementById('downloadButton').style.display = 'block';
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function extractTextFromImage() {
+            const file = document.getElementById('imageInput').files[0];
+            
+            if (!file) {
+                alert('Please select an image.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    
+                    // Extract the length of the encoded text from the first 4 pixels
+                    let textLength = 0;
+                    for (let i = 0; i < 4; i++) {
+                        textLength |= (imageData.data[i * 4] << (i * 8));
+                    }
+                    
+                    let extractedText = '';
+                    for (let i = 0; i < textLength; i++) {
+                        const byte = ((imageData.data[(i + 4) * 4] & 0x3) << 6) | 
+                                     ((imageData.data[(i + 4) * 4 + 1] & 0x3) << 4) | 
+                                     ((imageData.data[(i + 4) * 4 + 2] & 0x3) << 2) | 
+                                     (imageData.data[(i + 4) * 4 + 3] & 0x3);
+                        extractedText += String.fromCharCode(byte);
+                    }
+
+                    try {
+                        const decodedText = atob(extractedText);
+                        document.getElementById('stegoOutput').textContent = 'Extracted text: ' + decodedText;
+                    } catch (e) {
+                        document.getElementById('stegoOutput').textContent = 'No hidden text found or invalid encoding.';
+                    }
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function downloadImage() {
+            const image = document.getElementById('stegoImage');
+            const link = document.createElement('a');
+            link.href = image.src;
+            link.download = 'stego_image.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.dataset.target + 'Section').classList.add('active');
+            });
+        });
+
+        // Dropdown functionality
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        document.querySelectorAll('.dropdown-content a').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(this.dataset.target + 'Section').classList.add('active');
+                document.querySelector('.dropbtn').textContent = this.textContent + ' ▼';
+                document.getElementById("myDropdown").classList.remove("show");
+            });
+        });
+    </script>
+</body>
+</html>
