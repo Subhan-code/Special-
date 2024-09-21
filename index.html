@@ -28,6 +28,10 @@
             text-align: center;
             color: #1d1d1f;
             margin-bottom: 30px;
+            font-size: calc(1.5rem + 2vw);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         textarea, input[type="text"], input[type="number"] {
             width: 100%;
@@ -102,12 +106,9 @@
         }
         /* Mobile styles */
         @media (max-width: 768px) {
- h1 {
-font-size:1.5rem;
-            text-align: center;
-            color: #1d1d1f;
-            margin-bottom: 30px;
-        }
+            h1 {
+                font-size: 5vw;
+            }
             .container {
                 padding: 15px;
             }
@@ -599,6 +600,24 @@ font-size:1.5rem;
                 document.getElementById("myDropdown").classList.remove("show");
             });
         });
+
+        // Function to adjust h1 font size
+        function adjustH1FontSize() {
+            const h1 = document.querySelector('h1');
+            const container = document.querySelector('.container');
+            let fontSize = 5;
+            h1.style.fontSize = fontSize + 'vw';
+
+            while (h1.scrollWidth > container.clientWidth || h1.scrollHeight > h1.clientHeight) {
+                fontSize -= 0.5;
+                h1.style.fontSize = fontSize + 'vw';
+                if (fontSize <= 1) break; // Prevent infinite loop
+            }
+        }
+
+        // Call the function on load and resize
+        window.addEventListener('load', adjustH1FontSize);
+        window.addEventListener('resize', adjustH1FontSize);
     </script>
 </body>
 </html>
