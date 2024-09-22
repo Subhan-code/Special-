@@ -101,6 +101,7 @@
         }
         
         .bst{
+font-size:4vw;
             font-weight: bolder;
             padding: 20px;
         }
@@ -601,23 +602,23 @@
             });
         });
 
-        // Function to adjust h1 font size
-        function adjustH1FontSize() {
-            const h1 = document.querySelector('h1');
-            const container = document.querySelector('.container');
-            let fontSize = 5;
-            h1.style.fontSize = fontSize + 'vw';
+        // // // Function to adjust h1 font size
+        // // function adjustH1FontSize() {
+        // //     const h1 = document.querySelector('h1');
+        // //     const container = document.querySelector('.container');
+        // //     let fontSize = 5;
+        // //     h1.style.fontSize = fontSize + 'vw';
 
-            while (h1.scrollWidth > container.clientWidth || h1.scrollHeight > h1.clientHeight) {
-                fontSize -= 0.5;
-                h1.style.fontSize = fontSize + 'vw';
-                if (fontSize <= 1) break; // Prevent infinite loop
-            }
-        }
+        // //     while (h1.scrollWidth > container.clientWidth || h1.scrollHeight > h1.clientHeight) {
+        // //         fontSize -= 0.5;
+        // //         h1.style.fontSize = fontSize + 'vw';
+        // //         if (fontSize <= 1) break; // Prevent infinite loop
+        // //     }
+        // // }
 
-        // Call the function on load and resize
-        window.addEventListener('load', adjustH1FontSize);
-        window.addEventListener('resize', adjustH1FontSize);
+        // // Call the function on load and resize
+        // window.addEventListener('load', adjustH1FontSize);
+        // window.addEventListener('resize', adjustH1FontSize);
     </script>
 </body>
 </html>
