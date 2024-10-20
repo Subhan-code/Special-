@@ -244,6 +244,10 @@ font-size:4vw;
         .active .toggle-content {
             display: block;
         }
+        .con1{
+            margin-top: 20px;
+        }
+        #debughi { margin-top: 20px; font-family: monospace; white-space: pre-wrap; }
     </style>
 </head>
 <body>
@@ -357,6 +361,18 @@ font-size:4vw;
             </div>
         </div>
     </div>
+    </div>
+    <div class="con1">
+        <div class="container">
+            <h1>👻 Daily conversation 👻</h1>
+            <textarea id="input" placeholder="Enter text to encrypt or decrypt"></textarea>
+            <br>
+            <button onclick="randencrypt()">Encrypt</button>
+            <button onclick="randdecrypt()">Decrypt</button>
+            <br><br>
+            <textarea id="output" readonly></textarea>
+            <div id="debug"></div>
+        </div>
     </div>
 
     <script>
@@ -809,6 +825,63 @@ font-size:4vw;
     console.log("Decrypted text:", decrypted);
     document.getElementById('resultText').value = decrypted;
 }
+
+//Daily conversation 
+const words = [
+    "Did", "you", "eat", "yet?", 
+    "Let's", "go", "to", "a", "movie.", 
+    "Not", "everything", "that", "shines", "is", "great.", 
+    "Actions", "speak", "louder", "than", "words.", 
+    "Time", "flies", "Hangout", "fast!"
+];
+
+        function debug(message) {
+            document.getElementById('debug').textContent += message + '\n';
+        }
+
+        function randencrypt() {
+            const input = document.getElementById('input').value;
+            debug('Encrypting: ' + input);
+            let encrypted = '';
+            
+            for (let i = 0; i < input.length; i++) {
+                const charCode = input.charCodeAt(i);
+                const shift = Math.floor(Math.random() * words.length);
+                const shiftedCode = (charCode + shift) % 256;
+                const firstIndex = Math.floor(shiftedCode / words.length);
+                const secondIndex = shiftedCode % words.length;
+                const thirdIndex = shift;
+                encrypted += words[firstIndex] + ' ' + words[secondIndex] + ' ' + words[thirdIndex] + ' ';
+                debug(`Char: ${input[i]}, CharCode: ${charCode}, Shift: ${shift}, ShiftedCode: ${shiftedCode}, Words: ${words[firstIndex]} ${words[secondIndex]} ${words[thirdIndex]}`);
+            }
+            
+            document.getElementById('output').value = encrypted.trim();
+            debug('Encrypted result: ' + encrypted.trim());
+        }
+
+        function randdecrypt() {
+            const input = document.getElementById('input').value;
+            debug('Decrypting: ' + input);
+            const encryptedWords = input.split(' ');
+            let decrypted = '';
+            
+            for (let i = 0; i < encryptedWords.length; i += 3) {
+                const firstIndex = words.indexOf(encryptedWords[i]);
+                const secondIndex = words.indexOf(encryptedWords[i + 1]);
+                const shift = words.indexOf(encryptedWords[i + 2]);
+                if (firstIndex === -1 || secondIndex === -1 || shift === -1) {
+                    debug(`Error: Word not found in list: ${encryptedWords[i]} or ${encryptedWords[i + 1]} or ${encryptedWords[i + 2]}`);
+                    return;
+                }
+                let charCode = (firstIndex * words.length + secondIndex - shift + 256) % 256;
+                decrypted += String.fromCharCode(charCode);
+                debug(`Words: ${encryptedWords[i]} ${encryptedWords[i + 1]} ${encryptedWords[i + 2]}, Shift: ${shift}, CharCode: ${charCode}, Char: ${String.fromCharCode(charCode)}`);
+            }
+            
+            document.getElementById('output').value = decrypted;
+            debug('Decrypted result: ' + decrypted);
+        }
+        
     </script>
 </body>
 </html>
