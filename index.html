@@ -275,107 +275,116 @@ font-size:4vw;
                 <a href="#" data-target="stego">Text in Image</a>
             </div>
         </div>
-        
         <div id="morseSection" class="section active">
-            <textarea id="morseInput" rows="5" placeholder="Enter text or Morse code here..."></textarea>
-            <button onclick="translateMorse()">Convert Morse</button>
-            <div id="morseOutput" class="output"></div>
-        </div>
-        
-        <div id="caesarSection" class="section">
-            <div class="toggle-switch">
-                <label class="switch">
-                    <input type="checkbox" id="caesarToggle">
-                    <span class="slider"></span>
-                </label>
-                <span class="bst">Decrypt</span>
-            </div>
-            <input type="number" id="caesarShift" placeholder="Shift" min="0" max="25" value="3">
-            <textarea id="caesarInput" rows="5" placeholder="Enter text here..."></textarea>
-            <button onclick="processCaesar()">Process Caesar</button>
-            <div id="caesarOutput" class="output"></div>
-        </div>
+    <textarea id="morseInput" rows="5" placeholder="Enter text or Morse code here..."></textarea>
+    <button onclick="translateMorse()">Convert Morse</button>
+    <div id="morseOutput" class="output"></div>
+    
+</div>
 
-        <div id="vigenereSection" class="section">
-            <div class="toggle-switch">
-                <label class="switch">
-                    <input type="checkbox" id="vigenereToggle">
-                    <span class="slider"></span>
-                </label>
-                <span class="bst">Decrypt</span>
-            </div>
-            <input type="text" id="vigenereKey" placeholder="Enter key...">
-            <textarea id="vigenereInput" rows="5" placeholder="Enter text..."></textarea>
-            <button onclick="processVigenere()">Process Vigenère</button>
-            <div id="vigenereOutput" class="output"></div>
-        </div>
+<div id="caesarSection" class="section">
+    <div class="toggle-switch">
+        <label class="switch">
+            <input type="checkbox" id="caesarToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="bst">Decrypt</span>
+    </div>
+    <input type="number" id="caesarShift" placeholder="Shift" min="0" max="25" value="3">
+    <textarea id="caesarInput" rows="5" placeholder="Enter text here..."></textarea>
+    <button onclick="processCaesar()">Process Caesar</button>
+    <div id="caesarOutput" class="output"></div>
+</div>
 
-        <div id="binarySection" class="section">
-            <div class="toggle-switch">
-                <label class="switch">
-                    <input type="checkbox" id="binaryToggle">
-                    <span class="slider"></span>
-                </label>
-                <span class="bst">Binary to Text</span>
-            </div>
-            <textarea id="binaryInput" rows="5" placeholder="Enter text or binary..."></textarea>
-            <button onclick="processBinary()">Convert Binary</button>
-            <div id="binaryOutput" class="output"></div>
-        </div>
+<div id="vigenereSection" class="section">
+    <div class="toggle-switch">
+        <label class="switch">
+            <input type="checkbox" id="vigenereToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="bst">Decrypt</span>
+    </div>
+    <input type="text" id="vigenereKey" placeholder="Enter key...">
+    <textarea id="vigenereInput" rows="5" placeholder="Enter text..."></textarea>
+    <button onclick="processVigenere()">Process Vigenère</button>
+    <div id="vigenereOutput" class="output"></div>
+</div>
 
-        <div id="base64Section" class="section">
-            <div class="toggle-switch">
-                <label class="switch">
-                    <input type="checkbox" id="base64Toggle">
-                    <span class="slider"></span>
-                </label>
-                <span class="bst">Decode</span>
-            </div>
-            <textarea id="base64Input" rows="5" placeholder="Enter text..."></textarea>
-            <button onclick="processBase64()">Process Base64</button>
-            <div id="base64Output" class="output"></div>
-        </div>
+<div id="binarySection" class="section">
+    <div class="toggle-switch">
+        <label class="switch">
+            <input type="checkbox" id="binaryToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="bst">Binary to Text</span>
+    </div>
+    <textarea id="binaryInput" rows="5" placeholder="Enter text or binary..."></textarea>
+    <button onclick="processBinary()">Convert Binary</button>
+    <div id="binaryOutput" class="output"></div>
+</div>
 
-        <div id="stegoSection" class="section">
-            <input type="file" id="imageInput" accept="image/*">
-            <textarea id="stegoText" rows="3" placeholder="Enter secret text..."></textarea>
-            <button onclick="hideTextInImage()">Hide Text in Image</button>
-            <button onclick="extractTextFromImage()">Extract Secret from Image</button>
-            <div id="stegoOutput" class="output"></div>
-            <img id="stegoImage" src="" alt="Stego Image" style="display: none; max-width: 100%; margin-top: 20px;">
-            <button id="downloadButton" onclick="downloadImage()" style="display: none;">Download Modified Image</button>
-        </div>
-         <div id="unicodeSection" class="section">
-            <div class="toggle-section">
-                <div class="toggle-header" onclick="toggleSection(this)">Secret Unicode</div>
-                <div class="toggle-content">
-                    <h2>Original Text</h2>
-                    <textarea id="originalText" placeholder="Enter your text here"></textarea>
-                    
-                    <h2>Encrypted/Decrypted Text</h2>
-                    <textarea id="resultText" readonly></textarea>
-                    
-                    <button onclick="encrypt()">Encrypt</button>
-                    <button onclick="decrypt()">Decrypt</button>
-                </div>
-            </div>
+<div id="base64Section" class="section">
+    <div class="toggle-switch">
+        <label class="switch">
+            <input type="checkbox" id="base64Toggle">
+            <span class="slider"></span>
+        </label>
+        <span class="bst">Decode</span>
+    </div>
+    <textarea id="base64Input" rows="5" placeholder="Enter text..."></textarea>
+    <button onclick="processBase64()">Process Base64</button>
+    <div id="base64Output" class="output"></div>
+</div>
+
+<div id="stegoSection" class="section">
+    <input type="file" id="imageInput" accept="image/*">
+    <textarea id="stegoText" rows="3" placeholder="Enter secret text..."></textarea>
+    <button onclick="hideTextInImage()">Hide Text in Image</button>
+    <button onclick="extractTextFromImage()">Extract Secret from Image</button>
+    <div id="stegoOutput" class="output"></div>
+    <img id="stegoImage" src="" alt="Stego Image" style="display: none; max-width: 100%; margin-top: 20px;">
+    <button id="downloadButton" onclick="downloadImage()" style="display: none;">Download Modified Image</button>
+</div>
+
+<div id="unicodeSection" class="section">
+    <div class="toggle-section">
+        <div class="toggle-header" onclick="toggleSection(this)">Secret Unicode</div>
+        <div class="toggle-content">
+            <h2>Original Text</h2>
+            <textarea id="originalText" placeholder="Enter your text here"></textarea>
+            
+            <h2>Encrypted/Decrypted Text</h2>
+            <textarea id="resultText" readonly></textarea>
+            
+            <button onclick="encrypt()">Encrypt</button>
+            <button onclick="decrypt()">Decrypt</button>
+            <button id="copyButton" onclick="copyToClipboard('resultText')">Copy</button>
         </div>
     </div>
-    </div>
-    <div class="con1">
-        <div class="container">
-            <h1>👻 Daily conversation 👻</h1>
-            <textarea id="input" placeholder="Enter text to encrypt or decrypt"></textarea>
-            <br>
-            <button onclick="randencrypt()">Encrypt</button>
-            <button onclick="randdecrypt()">Decrypt</button>
-            <br><br>
-            <textarea id="output" readonly></textarea>
-            <div id="debug"></div>
-        </div>
-    </div>
+</div>
 
+<div class="con1">
+    <div class="container">
+        <h1>👻 Daily conversation 👻</h1>
+        <textarea id="input" placeholder="Enter text to encrypt or decrypt"></textarea>
+        <br>
+        <button onclick="randencrypt()">Encrypt</button>
+        <button onclick="randdecrypt()">Decrypt</button>
+        <br><br>
+        <textarea id="output" readonly></textarea>
+        <button id="copyButton" onclick="copyToClipboard('output')">Copy</button>
+        <div id="debug"></div>
+    </div>
+</div>
     <script>
+        //copy to clipboard 
+        function copyToClipboard(elementId) {
+    const element = document.getElementById(elementId);
+    element.select();
+    element.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard.writeText(element.value);
+    alert('Text copied to clipboard!');
+}
         const morseCode = {
             'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
             'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
