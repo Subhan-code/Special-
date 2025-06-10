@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sf': ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        'inter': ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
         primary: {
