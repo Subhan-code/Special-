@@ -26,47 +26,7 @@ A comprehensive, professional-grade cryptography and steganography suite built w
 - **Debug Information** - Detailed processing logs for learning
 - **Educational Content** - Learn about each cipher technique
 
-## Technology Stack
 
-- **Frontend**: React 18 + TypeScript
-- **Styling**: Tailwind CSS with custom design system
-- **Build Tool**: Vite
-- **Icons**: Lucide React
-- **Font**: SF Pro Display (Apple's system font)
-
-## Getting Started
-
-### Prerequisites
-- Node.js 16+ 
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone <repository-url>
-cd cipher-toolkit
-```
-
-2. Install dependencies
-```bash
-npm install
-```
-
-3. Start the development server
-```bash
-npm run dev
-```
-
-4. Open your browser and navigate to `http://localhost:3000`
-
-### Building for Production
-
-```bash
-npm run build
-```
-
-The built files will be in the `dist` directory.
 
 ## Usage
 
